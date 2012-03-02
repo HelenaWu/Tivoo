@@ -20,7 +20,6 @@ import org.joda.time.format.DateTimeFormatter;
 public abstract class CalendarParser {
 	private Element myRoot;
 	private Map<String,String> myTagMap;
-	private List<Event> myAllEvents;
 
 	
 	
@@ -28,7 +27,6 @@ public abstract class CalendarParser {
 	{
 		myRoot = root;
 		myTagMap = createMap();
-		myAllEvents = new ArrayList<Event>();
 
 	}
 	
@@ -41,11 +39,7 @@ public abstract class CalendarParser {
 	protected Map<String,String> getTagMap(){
 		return myTagMap;
 	}
-	protected List<Event> getAllEvent(){
-		return myAllEvents;
-	}
-	
-	
+
 
 	
 	public boolean isKindOfEvent(){
@@ -67,7 +61,8 @@ public abstract class CalendarParser {
 	public List<Event> parseEvent() throws JaxenException, IOException {
 		
 		try {
-			
+			ArrayList<Event> AllEvents = new ArrayList<Event>();
+
 			
 			Iterator i = makeIterator(myTagMap.get("event"));
 			while (i.hasNext()) {
@@ -90,10 +85,10 @@ public abstract class CalendarParser {
 						additionalInfo
 						);		
 
-				myAllEvents.add(calEvent);
+				AllEvents.add(calEvent);
 
 			}
-			return myAllEvents;
+			return AllEvents;
 
 		} catch (JDOMException e) {
 			e.printStackTrace();
